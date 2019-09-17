@@ -1,4 +1,4 @@
-import GameManager from '../engine/gamemanager'
+import Engine from '../engine/Engine'
 import Entity from '../engine/entity'
 import Vector2 from '../engine/vector2'
 import shipBehavior from './behaviors/ship'
@@ -7,7 +7,7 @@ import Renderer from '../engine/behaviors/renderer'
 
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
-new GameManager(ctx)
+new Engine(ctx)
 
 canvas.width = innerWidth
 canvas.height = innerHeight
@@ -22,10 +22,10 @@ let ship = new Entity(
     canvas.height / 2,
     [new Renderer(20, 'blue'), new RigidBody(), new shipBehavior()],
     [
-        new Entity(-10, -10, [new Renderer(10, 'red')]),
-        new Entity(-10, 10, [new Renderer(10, 'red')])
+        new Entity(-5, -20, [new Renderer(10, 'red')]),
+        new Entity(-5, 20, [new Renderer(10, 'red')])
     ]
 )
 
-GameManager.addGameObject(ship)
-GameManager.run()
+Engine.game.addGameObject(ship)
+Engine.game.run()

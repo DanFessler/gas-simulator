@@ -1,22 +1,21 @@
-import GameManager from '../../engine/gamemanager'
+import Engine from '../../engine/Engine'
 import Behavior from '../../engine/behavior'
 import Vector2 from '../../engine/vector2'
 
 class Bullet extends Behavior {
     lifespan = 600
     start = () => {
-        this.rigidbody = this.entity.getComponent('RigidBody')
-        this.renderer = this.entity.getComponent('Renderer')
         this.time = Date.now()
     }
 
     update = () => {
+        let self = this.entity
         if (this.time + this.lifespan < Date.now()) {
-            this.rigidbody.velocity = this.rigidbody.velocity.mult(0.75)
-            this.renderer.radius = this.renderer.radius * 0.75
+            self.RigidBody.velocity = self.RigidBody.velocity.mult(0.75)
+            self.Renderer.radius = self.Renderer.radius * 0.75
         }
-        if (this.rigidbody.velocity.length() < 1) {
-            GameManager.destroy(this.entity)
+        if (self.RigidBody.velocity.length() < 1) {
+            Engine.game.destroy(self)
         }
     }
 }

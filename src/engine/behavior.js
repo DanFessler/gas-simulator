@@ -1,20 +1,11 @@
 export default class Behavior {
+    entity = null
 
-  entity = null;
+    constructor() {}
 
-  constructor() {
+    start = () => {}
 
-  }
+    update = () => {}
 
-  start = () => {
-
-  }
-
-  update = () => {
-
-  }
-
-  render = () => {
-
-  }
+    render = () => {}
 }

@@ -17,6 +17,7 @@ export default class Entity {
             behaviors.forEach(behavior => {
                 behavior.entity = this
                 this.behaviors.push(behavior)
+                this[behavior.constructor.name] = behavior
             })
         }
 
@@ -59,12 +60,6 @@ export default class Entity {
             child.draw(ctx)
         })
         ctx.restore()
-    }
-
-    getComponent = type => {
-        return this.behaviors.find(
-            behavior => behavior.constructor.name === type
-        )
     }
 
     static list = []

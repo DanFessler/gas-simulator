@@ -1,4 +1,4 @@
-import GameManager from '../../engine/gamemanager'
+import Engine from '../../engine/Engine'
 import Entity from '../../engine/entity'
 import Behavior from '../../engine/behavior'
 import Vector2 from '../../engine/vector2'
@@ -6,10 +6,15 @@ import Renderer from '../../engine/behaviors/renderer'
 import RigidBody from '../../engine/behaviors/rigidbody'
 import Bullet from './bullet'
 
+class bulletPrefab extends Entity {
+    constructor(x, y) {
+        super(x, y, [new Renderer(5, 'green'), new RigidBody(), new Bullet()])
+    }
+}
+
 class Ship extends Behavior {
     start = () => {
-        this.rigidbody = this.entity.getComponent('RigidBody')
-        this.rigidbody.velocity.x = 0
+        this.entity.RigidBody.velocity.x = 0
         this.delay = 50
         this.lastShot = Date.now()
         this.keys = {
@@ -59,36 +64,50 @@ class Ship extends Behavior {
     }
 
     update = () => {
+        let self = this.entity
         if (this.keys.space && this.lastShot + this.delay < Date.now()) {
-            let bullet = GameManager.addGameObject(
-                new Entity(this.entity.position.x, this.entity.position.y, [
-                    new Renderer(5, 'green'),
-                    new RigidBody(),
-                    new Bullet()
-                ])
+            this.spawnBullet(
+                self.position.x + Math.cos(self.angle) * 20,
+                self.position.y + Math.sin(self.angle) * 20,
+                self.angle + (Math.random() - 0.5) / 25
             )
-            bullet.getComponent('RigidBody').velocity = new Vector2(
-                Math.cos(this.entity.angle + (Math.random() - 0.5) / 10),
-                Math.sin(this.entity.angle + (Math.random() - 0.5) / 10)
+            this.spawnBullet(
+                self.position.x + Math.cos(self.angle + Math.PI / 2) * 20,
+                self.position.y + Math.sin(self.angle + Math.PI / 2) * 20,
+                self.angle + 0.1 + (Math.random() - 0.5) / 25
             )
-                .mult(10)
-                .add(this.rigidbody.velocity)
-
+            this.spawnBullet(
+                self.position.x + Math.cos(self.angle - Math.PI / 2) * 20,
+                self.position.y + Math.sin(self.angle - Math.PI / 2) * 20,
+                self.angle - 0.1 + (Math.random() - 0.5) / 25
+            )
             this.lastShot = Date.now()
         }
         if (this.keys.up) {
             let force = 0.1
-            this.rigidbody.addForce({
-                x: Math.cos(this.entity.angle) * force,
-                y: Math.sin(this.entity.angle) * force
+            self.RigidBody.addForce({
+                x: Math.cos(self.angle) * force,
+                y: Math.sin(self.angle) * force
             })
         }
         if (this.keys.left) {
-            this.entity.angle -= 0.1
+            self.angle -= 0.1
         }
         if (this.keys.right) {
-            this.entity.angle += 0.1
+            self.angle += 0.1
         }
+    }
+
+    spawnBullet = (x, y, angle) => {
+        let self = this.entity
+        let bullet = Engine.game.addGameObject(new bulletPrefab(x, y))
+
+        bullet.RigidBody.velocity = new Vector2(
+            Math.cos(angle),
+            Math.sin(angle)
+        )
+            .mult(10)
+            .add(self.RigidBody.velocity)
     }
 }
 
