@@ -1,5 +1,6 @@
 import Behavior from '../behavior'
-import Vector2 from '../vector2'
+import * as PIXI from 'pixi.js'
+import app from '../pixiApp.js'
 
 const g = 2500
 
@@ -8,22 +9,23 @@ class Renderer extends Behavior {
         super()
         this.radius = radius
         this.color = color
+        this.graphics = new PIXI.Graphics()
+        // this.graphics.lineStyle(1, 0xffffff)
+        this.graphics.beginFill(0xe74c3c)
+        this.graphics.drawCircle(0, 0, radius)
+        this.graphics.endFill()
+        app.stage.addChild(this.graphics)
     }
 
-    start() {}
+    start = () => {}
 
     update = () => {}
 
     draw = ctx => {
-        ctx.fillStyle = `white`
-        ctx.strokeStyle = this.color
-        ctx.beginPath()
-        ctx.arc(0, 0, this.radius, 0, Math.PI * 2, false)
-        ctx.moveTo(0, 0)
-        ctx.lineTo(this.radius, 0)
-        ctx.fill()
-        ctx.stroke()
-        ctx.closePath()
+        // this.div.style.left = `${this.entity.position.x}px`
+        // this.div.style.top = `${this.entity.position.y}px`
+        this.graphics.position.x = this.entity.position.x
+        this.graphics.position.y = this.entity.position.y
     }
 }
 

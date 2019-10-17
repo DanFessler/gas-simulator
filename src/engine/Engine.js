@@ -33,7 +33,7 @@ export default class Engine {
         })
 
         // draw each renderable game object
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+        // this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
         this.objects.forEach(object => {
             object.draw(this.ctx)
         })

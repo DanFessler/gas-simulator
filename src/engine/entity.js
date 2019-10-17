@@ -1,6 +1,6 @@
-import Vector2 from './vector2'
 import RigidBody from './behaviors/rigidbody'
 import Renderer from './behaviors/renderer'
+import Vector2 from 'vec2'
 
 const TAU = Math.PI * 2
 
@@ -48,9 +48,6 @@ export default class Entity {
     }
 
     draw = ctx => {
-        ctx.save()
-        ctx.translate(this.position.x, this.position.y)
-        ctx.rotate(this.angle)
         this.behaviors
             .filter(behavior => behavior.draw !== undefined)
             .forEach(behavior => {
@@ -59,7 +56,6 @@ export default class Entity {
         this.children.forEach(child => {
             child.draw(ctx)
         })
-        ctx.restore()
     }
 
     static list = []

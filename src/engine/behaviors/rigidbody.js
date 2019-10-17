@@ -1,5 +1,5 @@
 import Behavior from '../behavior'
-import Vector2 from '../vector2'
+import Vector2 from 'vec2'
 
 const g = 2500
 
@@ -7,7 +7,9 @@ class RigidBody extends Behavior {
     velocity = new Vector2(0, 0)
     angularVelocity = 0
 
-    start() {}
+    start() {
+        console.log('this.velocity')
+    }
 
     update = () => {
         let entity = this.entity
