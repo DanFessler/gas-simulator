@@ -1,62 +1,62 @@
-import RigidBody from './behaviors/rigidbody'
-import Renderer from './behaviors/renderer'
-import Vector2 from 'vec2'
+import RigidBody from "./behaviors/rigidbody";
+import Renderer from "./behaviors/renderer";
+import Vector2 from "vec2";
 
-const TAU = Math.PI * 2
+const TAU = Math.PI * 2;
 
 export default class Entity {
-    constructor(x, y, behaviors, children) {
-        this.parent = null
-        this.position = new Vector2(x, y)
-        this.angle = 0
+  constructor(x, y, behaviors, children) {
+    this.parent = null;
+    this.position = new Vector2(x, y);
+    this.angle = 0;
 
-        this.game = null
+    this.game = null;
 
-        this.behaviors = []
-        if (behaviors && behaviors.length) {
-            behaviors.forEach(behavior => {
-                behavior.entity = this
-                this.behaviors.push(behavior)
-                this[behavior.constructor.name] = behavior
-            })
-        }
-
-        this.children = []
-        if (children && children.length) {
-            children.forEach(child => {
-                child.parent = this
-                this.children.push(child)
-            })
-        }
-
-        Entity.list.push(this)
+    this.behaviors = [];
+    if (behaviors && behaviors.length) {
+      behaviors.forEach(behavior => {
+        behavior.entity = this;
+        this.behaviors.push(behavior);
+        this[behavior.constructor.name] = behavior;
+      });
     }
 
-    init = () => {
-        this.behaviors.forEach(behavior => {
-            behavior.start()
-        })
+    this.children = [];
+    if (children && children.length) {
+      children.forEach(child => {
+        child.parent = this;
+        this.children.push(child);
+      });
     }
 
-    update = () => {
-        this.behaviors.forEach(behavior => {
-            behavior.update()
-        })
-        this.children.forEach(child => {
-            child.update()
-        })
-    }
+    Entity.list.push(this);
+  }
 
-    draw = ctx => {
-        this.behaviors
-            .filter(behavior => behavior.draw !== undefined)
-            .forEach(behavior => {
-                behavior.draw(ctx)
-            })
-        this.children.forEach(child => {
-            child.draw(ctx)
-        })
-    }
+  init = () => {
+    this.behaviors.forEach(behavior => {
+      behavior.start();
+    });
+  };
 
-    static list = []
+  update = () => {
+    this.behaviors.forEach(behavior => {
+      behavior.update();
+    });
+    this.children.forEach(child => {
+      child.update();
+    });
+  };
+
+  draw = ctx => {
+    this.behaviors
+      .filter(behavior => behavior.draw !== undefined)
+      .forEach(behavior => {
+        behavior.draw(ctx);
+      });
+    this.children.forEach(child => {
+      child.draw(ctx);
+    });
+  };
+
+  static list = [];
 }
