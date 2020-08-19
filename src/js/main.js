@@ -96,6 +96,7 @@ class ParticleManager extends Entity {
 
   update = () => {
     // console.log(this.particles);
+    let avgVel = 0;
     for (const particle of this.particles) {
       // // Central Gravity
       // let downVec = particle.position
@@ -135,6 +136,7 @@ class ParticleManager extends Entity {
           particle.RigidBody.velocity.multiply(1, -1);
         }
       }
+
       if (this.floorCollision) {
         // console.log(app.height);
         if (particle.position.y + particle.radius > app.renderer.height) {
@@ -142,7 +144,10 @@ class ParticleManager extends Entity {
           particle.RigidBody.velocity.multiply(1, -1);
         }
       }
+
+      avgVel += particle.RigidBody.velocity.length();
     }
+    console.log(avgVel / this.particles.length);
   };
 
   mod = (a, b) => ((a % b) + b) % b;

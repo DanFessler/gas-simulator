@@ -46,7 +46,7 @@ class Container extends Behavior {
         Math.pow(this.entity.position.x + this.entity.width - mouse.x, 2) +
           Math.pow(this.entity.position.y + this.entity.height - mouse.y, 2)
       );
-      if (d < 32) {
+      if (d < 10) {
         console.log("DRAG");
         this.dragging = true;
       }

@@ -32,6 +32,11 @@ export default class Engine {
   };
 
   tick = () => {
+    // update each game object
+    this.objects.forEach(object => {
+      object.update();
+    });
+
     let physicsObjects = this.objects.filter(
       object => object.RigidBody !== undefined
     );
@@ -134,11 +139,6 @@ export default class Engine {
       // b2.RigidBody.velocity.y =
       //     b2.RigidBody.velocity.y + p * b1.RigidBody.mass * ny
     }
-
-    // update each game object
-    this.objects.forEach(object => {
-      object.update();
-    });
 
     // draw each renderable game object
     // this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)

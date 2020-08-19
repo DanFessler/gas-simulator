@@ -11,40 +11,37 @@ class RectRenderer extends Behavior {
     this.height = h;
 
     this.color = color;
+
     this.box = new PIXI.Graphics();
-    this.box.lineStyle(1, 0x222222);
-    this.box.drawRect(0.5, 0.5, w - 1, h - 1);
     app.stage.addChild(this.box);
 
     this.lid = new PIXI.Graphics();
-    this.lid.lineStyle(2, 0xffffff);
-    this.lid.moveTo(0.5, 0.5).lineTo(w - 1, 0.5);
     app.stage.addChild(this.lid);
 
     this.walls = new PIXI.Graphics();
-    this.walls.lineStyle(2, 0xffffff);
-    this.walls.moveTo(0.5, 0.5).lineTo(0.5, h - 1);
-    this.walls.moveTo(w - 1, 0.5).lineTo(w - 1, h - 1);
     app.stage.addChild(this.walls);
 
     this.floor = new PIXI.Graphics();
-    this.floor.lineStyle(2, 0xffffff);
-    this.floor.moveTo(0.5, h - 1).lineTo(w - 1, h - 1);
     app.stage.addChild(this.floor);
+
+    this.updateRect(w, h);
   }
 
   start = () => {};
 
   update = () => {};
 
-  updateRect = () => {
-    let w = this.entity.width;
-    let h = this.entity.height;
+  updateRect = (w, h) => {
+    w = (this.entity && this.entity.width) || w;
+    h = (this.entity && this.entity.height) || h;
 
     // this.box = new PIXI.Graphics();
     this.box.clear();
     this.box.lineStyle(1, 0x222222);
     this.box.drawRect(0.5, 0.5, w - 1, h - 1);
+    this.box.beginFill(0xffffff);
+    this.box.drawCircle(w - 1, h - 1, 10);
+    this.box.endFill();
     // app.stage.addChild(this.box);
 
     // this.lid = new PIXI.Graphics();
