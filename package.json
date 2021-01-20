@@ -14,7 +14,7 @@
     "license": "ISC",
     "dependencies": {
         "collisions": "^2.0.13",
-        "gsap": "^2.0.1",
+        "gsap": "^3.6.0",
         "pixi.js": "^5.1.5",
         "vec2": "^1.6.1"
     },
